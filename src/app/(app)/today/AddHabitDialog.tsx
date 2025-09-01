@@ -42,7 +42,7 @@ export default function AddHabitDialog() {
         <DialogHeader>
           <DialogTitle>Add a new habit</DialogTitle>
           <DialogDescription>
-            What's a new habit you want to start building?
+            What&apos;s a new habit you want to start building?
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">

@@ -4,7 +4,7 @@ export type Habit = {
   name: string;
   description?: string;
   frequency_type: 'daily' | 'weekly';
-  frequency_details?: any;
+  frequency_details?: Record<string, unknown> | null;
   target: number;
   category?: string;
   color?: string;
