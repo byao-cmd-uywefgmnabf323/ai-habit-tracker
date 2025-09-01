@@ -4,65 +4,65 @@
 
 @layer base {
   :root {
-    --background: #ffffff;
-    --foreground: #171717;
+    --background: 0 0% 100%;
+    --foreground: 0 0% 9%;
+ 
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 9%;
+ 
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 9%;
+ 
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
 
-    --card: #ffffff;
-    --card-foreground: #171717;
+    --secondary: 0 0% 20%;
+    --secondary-foreground: 0 0% 98%;
 
-    --popover: #ffffff;
-    --popover-foreground: #171717;
+    --muted: 0 0% 20%;
+    --muted-foreground: 0 0% 40%;
+ 
+    --accent: 0 0% 20%;
+    --accent-foreground: 0 0% 98%;
+ 
+    --destructive: 0 100% 50%;
+    --destructive-foreground: 0 0% 98%;
 
-    --primary: #171717;
-    --primary-foreground: #ffffff;
-
-    --secondary: #333333;
-    --secondary-foreground: #ffffff;
-
-    --muted: #333333;
-    --muted-foreground: #666666;
-
-    --accent: #333333;
-    --accent-foreground: #ffffff;
-
-    --destructive: #ff0000;
-    --destructive-foreground: #ffffff;
-
-    --border: #cccccc;
-    --input: #cccccc;
-    --ring: #aaaaaa;
-
+    --border: 0 0% 80%;
+    --input: 0 0% 80%;
+    --ring: 0 0% 67%;
+ 
     --radius: 0.5rem;
   }
-
+ 
   .dark {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: 0 0% 4%;
+    --foreground: 0 0% 93%;
 
-    --card: #0a0a0a;
-    --card-foreground: #ededed;
+    --card: 0 0% 4%;
+    --card-foreground: 0 0% 93%;
 
-    --popover: #0a0a0a;
-    --popover-foreground: #ededed;
+    --popover: 0 0% 4%;
+    --popover-foreground: 0 0% 93%;
 
-    --primary: #ededed;
-    --primary-foreground: #0a0a0a;
+    --primary: 0 0% 93%;
+    --primary-foreground: 0 0% 4%;
 
-    --secondary: #666666;
-    --secondary-foreground: #ededed;
+    --secondary: 0 0% 40%;
+    --secondary-foreground: 0 0% 93%;
 
-    --muted: #666666;
-    --muted-foreground: #cccccc;
+    --muted: 0 0% 40%;
+    --muted-foreground: 0 0% 80%;
 
-    --accent: #666666;
-    --accent-foreground: #ededed;
+    --accent: 0 0% 40%;
+    --accent-foreground: 0 0% 93%;
 
-    --destructive: #ff3737;
-    --destructive-foreground: #ededed;
+    --destructive: 0 78% 61%;
+    --destructive-foreground: 0 0% 93%;
 
-    --border: #666666;
-    --input: #666666;
-    --ring: #666666;
+    --border: 0 0% 40%;
+    --input: 0 0% 40%;
+    --ring: 0 0% 40%;
   }
 }
 
