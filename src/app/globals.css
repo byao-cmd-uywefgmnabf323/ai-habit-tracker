@@ -48,6 +48,9 @@
     --ring: #666666;
   }
 
+}
+
+@layer base {
   body {
     @apply bg-background text-foreground;
   }

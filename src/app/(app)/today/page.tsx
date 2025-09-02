@@ -5,7 +5,7 @@ import { Habit } from '@/types/habit';
 
 export default async function TodayPage() {
   const user = await getCurrentUser();
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { data: habits, error } = await supabase
     .from('habits')
