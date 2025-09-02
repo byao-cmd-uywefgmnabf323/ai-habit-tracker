@@ -1,7 +1,7 @@
 'use client';
 
 import { Habit } from '@/types/habit';
-import HabitItem from '../today/HabitItem'; // Reusing the HabitItem component from the today page
+import HabitItem from '@/app/(app)/today/HabitItem';
 
 interface HabitsClientPageProps {
   habits: Habit[];

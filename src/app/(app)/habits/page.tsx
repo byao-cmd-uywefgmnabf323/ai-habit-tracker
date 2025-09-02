@@ -3,7 +3,7 @@ import { getCurrentUser } from '@/lib/auth';
 import HabitsClientPage from './HabitsClientPage';
 
 export default async function HabitsPage() {
-  const supabase = createClient();
+  const supabase = await createClient();
   const user = await getCurrentUser();
 
   const { data: habits, error } = await supabase
