@@ -5,7 +5,7 @@ import { createClient } from '@/lib/supabase/server';
 import { getCurrentUser } from '@/lib/auth';
 
 export async function addHabit(habitName: string) {
-  const supabase = createClient();
+  const supabase = await createClient();
   const user = await getCurrentUser();
 
   if (!user) {
