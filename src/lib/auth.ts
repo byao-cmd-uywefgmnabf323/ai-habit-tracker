@@ -1,7 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 
 export async function getUserSession() {
-  const supabase = createClient()
+  const supabase = await createClient()
   try {
     const {
       data: { session },
