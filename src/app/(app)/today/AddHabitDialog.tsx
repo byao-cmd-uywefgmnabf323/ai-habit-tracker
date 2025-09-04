@@ -49,16 +49,15 @@ export default function AddHabitDialog() {
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
-              Name
-            </Label>
+          <div className="grid gap-2">
+            <Label htmlFor="name">Habit Name</Label>
             <Input
               id="name"
+              placeholder="e.g., Read for 15 minutes"
               value={habitName}
               onChange={(e) => setHabitName(e.target.value)}
-              className="col-span-3"
               disabled={isSaving}
+              onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
             />
           </div>
         </div>

@@ -2,7 +2,9 @@
 
 import { useState } from 'react';
 import { Habit } from '@/types/habit';
-import { CheckSquare, Square } from 'lucide-react';
+import { Check, Square } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
 
 interface HabitItemProps {
   habit: Habit;
@@ -11,22 +13,35 @@ interface HabitItemProps {
 export default function HabitItem({ habit }: HabitItemProps) {
   const [isCompleted, setIsCompleted] = useState(false);
 
+  // In a real app, you'd fetch and update completion status from the database.
+
   return (
-    <li
-      className="flex items-center justify-between p-4 mb-2 rounded-lg bg-gray-100 dark:bg-gray-800 cursor-pointer transition-colors hover:bg-gray-200 dark:hover:bg-gray-700"
-      onClick={() => setIsCompleted(!isCompleted)}
-    >
-      <div className="flex items-center">
-        {isCompleted ? (
-          <CheckSquare className="w-6 h-6 text-green-500 mr-4" />
-        ) : (
-          <Square className="w-6 h-6 text-gray-400 dark:text-gray-500 mr-4" />
+    <li>
+      <Card
+        className={cn(
+          'cursor-pointer transition-all',
+          isCompleted
+            ? 'bg-muted/50 border-transparent shadow-none'
+            : 'hover:bg-muted/50'
         )}
-        <span className={`font-medium ${isCompleted ? 'line-through text-gray-500' : ''}`}>
-          {habit.name}
-        </span>
-      </div>
-      {/* Maybe add streak info or other details here */}
+        onClick={() => setIsCompleted(!isCompleted)}
+      >
+        <CardContent className="flex items-center justify-between p-4">
+          <span
+            className={cn(
+              'font-medium',
+              isCompleted && 'line-through text-muted-foreground'
+            )}
+          >
+            {habit.name}
+          </span>
+          {isCompleted ? (
+            <Check className="w-5 h-5 text-primary" />
+          ) : (
+            <Square className="w-5 h-5 text-muted-foreground/50" />
+          )}
+        </CardContent>
+      </Card>
     </li>
   );
 }

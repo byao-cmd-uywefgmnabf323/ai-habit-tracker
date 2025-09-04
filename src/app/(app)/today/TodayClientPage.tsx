@@ -15,11 +15,11 @@ interface TodayClientPageProps {
 
 export default function TodayClientPage({ user, habits }: TodayClientPageProps) {
   return (
-    <div>
+    <div className="space-y-8">
       <header className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold">Today</h1>
-          <p className="text-gray-500 dark:text-gray-400">
+          <h1 className="text-3xl font-bold tracking-tight">Today</h1>
+          <p className="text-muted-foreground">
             {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
           </p>
         </div>
@@ -28,17 +28,15 @@ export default function TodayClientPage({ user, habits }: TodayClientPageProps) 
 
       <div className="mt-8">
         {habits.length === 0 ? (
-          <div className="text-center py-12 px-4 rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-700">
-            <h3 className="text-lg font-medium">No habits yet!</h3>
-            <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-              Add a new habit to get started.
+          <div className="text-center py-20 px-4 rounded-lg bg-muted/20">
+            <h3 className="text-xl font-medium">No habits for today.</h3>
+            <p className="text-sm text-muted-foreground mt-2 mb-6">
+              Ready to build a new routine? Add your first habit to get started.
             </p>
-            <div className="mt-4">
-              <AddHabitDialog />
-            </div>
+            <AddHabitDialog />
           </div>
         ) : (
-          <ul>
+          <ul className="space-y-4">
             {habits.map((habit) => (
               <HabitItem key={habit.id} habit={habit} />
             ))}
@@ -48,6 +46,3 @@ export default function TodayClientPage({ user, habits }: TodayClientPageProps) 
     </div>
   );
 }
-
-
-
