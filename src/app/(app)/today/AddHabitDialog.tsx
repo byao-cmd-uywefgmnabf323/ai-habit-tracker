@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -16,6 +17,7 @@ import { Label } from '@/components/ui/label';
 import { addHabit } from './actions';
 
 export default function AddHabitDialog() {
+  const router = useRouter();
   const [habitName, setHabitName] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
@@ -29,6 +31,7 @@ export default function AddHabitDialog() {
     if (!result?.error) {
       setHabitName('');
       setIsOpen(false);
+      router.refresh();
     }
     // Optionally, handle the error case with a toast notification
   };

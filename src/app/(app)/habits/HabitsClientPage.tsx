@@ -2,6 +2,7 @@
 
 import { Habit } from '@/types/habit';
 import HabitItem from '@/app/(app)/today/HabitItem';
+import AddHabitDialog from '../today/AddHabitDialog';
 
 interface HabitsClientPageProps {
   habits: Habit[];
@@ -17,7 +18,7 @@ export default function HabitsClientPage({ habits }: HabitsClientPageProps) {
             Manage all your habits in one place.
           </p>
         </div>
-        {/* We can add a filter or sort button here later */}
+        <AddHabitDialog />
       </header>
 
       <div className="mt-8">
