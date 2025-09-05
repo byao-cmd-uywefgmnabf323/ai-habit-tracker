@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
+import { Plus } from 'lucide-react';
 import {
   Dialog,
   DialogContent,
@@ -39,7 +40,10 @@ export default function AddHabitDialog() {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button>Add New Habit</Button>
+        <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 h-auto">
+          <Plus className="w-5 h-5 mr-2" />
+          Add New Habit
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
@@ -62,7 +66,13 @@ export default function AddHabitDialog() {
           </div>
         </div>
         <DialogFooter>
-          <Button type="submit" onClick={handleSubmit} disabled={isSaving}>
+          <Button 
+            type="submit" 
+            onClick={handleSubmit} 
+            disabled={isSaving}
+            size="lg"
+            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-3 h-auto w-full"
+          >
             {isSaving ? 'Saving...' : 'Save Habit'}
           </Button>
         </DialogFooter>

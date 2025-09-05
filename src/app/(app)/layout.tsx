@@ -10,10 +10,10 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   }
 
   return (
-    <div className="relative flex min-h-screen flex-col bg-background">
+    <div className="relative flex min-h-screen flex-col bg-slate-50 dark:bg-slate-900">
       <Header />
       <main className="flex-1">
-        <div className="container relative py-6 lg:py-8">
+        <div className="container relative py-8 lg:py-12">
           {children}
         </div>
       </main>
