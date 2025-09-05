@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import { User } from '@supabase/supabase-js';
 import { Habit } from '@/types/habit';
 import HabitItem from './HabitItem';
@@ -12,7 +11,7 @@ interface TodayClientPageProps {
   habits: Habit[];
 }
 
-export default function TodayClientPage({ user, habits }: TodayClientPageProps) {
+export default function TodayClientPage({ habits }: TodayClientPageProps) {
   return (
     <div className="max-w-5xl mx-auto px-6">
       {/* Hero Section */}
@@ -23,7 +22,7 @@ export default function TodayClientPage({ user, habits }: TodayClientPageProps) 
           </span>
         </div>
         <h1 className="text-7xl font-black bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent mb-6 tracking-tight">
-          Today's Habits
+          Today&apos;s Habits
         </h1>
         <p className="text-2xl text-slate-600 dark:text-slate-300 mb-12 max-w-3xl mx-auto leading-relaxed">
           Transform your life one habit at a time. Track your progress and build lasting routines.

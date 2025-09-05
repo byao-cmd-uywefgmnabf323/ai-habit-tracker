@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Habit } from '@/types/habit';
-import { Check, Square, Zap } from 'lucide-react';
+import { Check, Zap } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { toggleHabitCompletion } from './actions';
