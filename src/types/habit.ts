@@ -9,4 +9,14 @@ export type Habit = {
   category?: string;
   color?: string;
   created_at: string;
+  completed_today?: boolean;
+  streak?: number;
+};
+
+export type HabitCompletion = {
+  id: string;
+  habit_id: string;
+  user_id: string;
+  completed_at: string;
+  created_at: string;
 };
