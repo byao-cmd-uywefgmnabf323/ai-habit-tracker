@@ -1,36 +1,93 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AI Habit Tracker - Bubbly Edition
+
+Welcome to your newly redesigned AI Habit Tracker! This project features a fun, bubbly, and engaging UI, built with Next.js, Tailwind CSS, and Framer Motion.
 
 ## Getting Started
 
-First, run the development server:
+First, install the dependencies:
+
+```bash
+npm install
+```
+
+Then, run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Customizing Your Bubbly Theme
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+This project is built with a highly customizable design system. Here's how you can tweak the look and feel:
 
-## Learn More
+### 🎨 Colors
 
-To learn more about Next.js, take a look at the following resources:
+The color palette is defined using CSS variables in `src/app/globals.css` and referenced in `tailwind.config.ts`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1.  **Edit CSS Variables**: Open `src/app/globals.css` and modify the HSL values in the `:root` block to change the core colors of the theme.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+    ```css
+    /* Example from src/app/globals.css */
+    :root {
+      --background: 240 10% 99%;
+      --foreground: 240 10% 3.9%;
+      --primary: 346.8 77.2% 49.8%;
+      /* ... more colors */
+    }
+    ```
 
-## Deploy on Vercel
+2.  **Tailwind Configuration**: The `tailwind.config.ts` file uses these variables. No changes are needed here unless you want to add new color names.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### ✒️ Typography
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The project uses [Poppins](https://fonts.google.com/specimen/Poppins) for headings and [Inter](https://fonts.google.com/specimen/Inter) for body text.
+
+1.  **Change Fonts**: Open `src/app/layout.tsx` and import your desired fonts from `next/font/google`.
+2.  **Update CSS Variables**: Assign your new fonts to the `--font-inter` and `--font-poppins` CSS variables in the same file.
+
+    ```tsx
+    // Example from src/app/layout.tsx
+    const fontSans = Inter({ subsets: ["latin"], variable: "--font-inter" });
+    const fontHeading = Poppins({ 
+      subsets: ["latin"], 
+      weight: ["400", "700", "800"], 
+      variable: "--font-poppins" 
+    });
+    ```
+
+### 🫧 Border Radius (Bubbliness)
+
+The bubbly effect is controlled by the `borderRadius` values in `tailwind.config.ts`.
+
+1.  **Adjust Radius**: Open `tailwind.config.ts` and modify the `borderRadius` values. We've added custom large radii like `4xl`, `5xl`, and `6xl`.
+
+    ```javascript
+    // Example from tailwind.config.ts
+    borderRadius: {
+      '4xl': '2rem',
+      '5xl': '2.5rem',
+      '6xl': '3rem',
+      lg: "var(--radius)", // this is 2rem by default now
+    },
+    ```
+
+2.  **Component-Level**: You can also change the border radius on individual components by modifying their `className` (e.g., changing `rounded-4xl` to `rounded-lg`).
+
+### ✨ Animations
+
+We use [Framer Motion](https://www.framer.com/motion/) for animations. Reusable animation variants are defined in `src/lib/animations.ts`.
+
+1.  **Modify Variants**: Open `src/lib/animations.ts` to tweak the properties of existing animations like `fadeInUp` or `staggerContainer`.
+2.  **Apply Animations**: To use an animation, import it and apply it to a `motion` component in your JSX.
+
+    ```tsx
+    import { motion } from 'framer-motion';
+    import { staggerContainer, fadeInUp } from '@/lib/animations';
+
+    <motion.div variants={staggerContainer} initial="hidden" animate="show">
+      <motion.h1 variants={fadeInUp}>Hello, Bubbly World!</motion.h1>
+    </motion.div>
+    ```
+

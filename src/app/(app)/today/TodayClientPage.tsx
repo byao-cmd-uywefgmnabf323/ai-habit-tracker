@@ -1,68 +1,80 @@
 'use client';
 
 import { User } from '@supabase/supabase-js';
+import { motion } from 'framer-motion';
 import { Habit } from '@/types/habit';
 import HabitItem from './HabitItem';
 import AddHabitDialog from './AddHabitDialog';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { ProgressCircle } from '@/components/ui/progress-circle';
+import { Target } from 'lucide-react';
+import { staggerContainer, fadeInUp } from '@/lib/animations';
 
 interface TodayClientPageProps {
   user: User | null;
   habits: Habit[];
 }
 
-export default function TodayClientPage({ habits }: TodayClientPageProps) {
-  return (
-    <div className="max-w-5xl mx-auto px-6">
-      {/* Hero Section */}
-      <div className="text-center mb-16">
-        <div className="inline-flex items-center px-6 py-3 rounded-full bg-gradient-to-r from-purple-100 to-blue-100 dark:from-purple-900/30 dark:to-blue-900/30 border border-purple-200/50 dark:border-purple-700/30 mb-8">
-          <span className="text-purple-600 dark:text-purple-300 font-semibold text-lg">
-            {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
-          </span>
-        </div>
-        <h1 className="text-7xl font-black bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent mb-6 tracking-tight">
-          Today&apos;s Habits
-        </h1>
-        <p className="text-2xl text-slate-600 dark:text-slate-300 mb-12 max-w-3xl mx-auto leading-relaxed">
-          Transform your life one habit at a time. Track your progress and build lasting routines.
-        </p>
-        <AddHabitDialog />
-      </div>
+export default function TodayClientPage({ user, habits }: TodayClientPageProps) {
+  const completedCount = habits.filter(h => h.completed_today).length;
+  const totalCount = habits.length;
+  const completionPercentage = totalCount > 0 ? (completedCount / totalCount) * 100 : 0;
 
-      {/* Habits Section */}
-      <Card className="shadow-2xl border-0 bg-white/80 dark:bg-slate-800/80 backdrop-blur-xl rounded-3xl overflow-hidden">
-        <CardContent className="p-12">
-          <div className="space-y-8">
+  return (
+    <motion.div 
+      className="space-y-8"
+      initial="hidden"
+      animate="show"
+      variants={staggerContainer}
+    >
+      <motion.header variants={fadeInUp} className="flex flex-col sm:flex-row items-center justify-between gap-6">
+        <div>
+          <h1 className="font-heading text-5xl font-extrabold tracking-tighter">
+            Welcome back, {user?.user_metadata.name || 'friend'}!
+          </h1>
+          <p className="mt-2 text-xl text-muted-foreground">
+            {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
+          </p>
+        </div>
+        <div className="flex items-center gap-4">
+          <ProgressCircle progress={completionPercentage} />
+          <div>
+            <p className="font-bold text-2xl">{completedCount}/{totalCount}</p>
+            <p className="text-muted-foreground">habits completed</p>
+          </div>
+        </div>
+      </motion.header>
+
+      <motion.div variants={fadeInUp}>
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between">
+            <CardTitle>Today's Habits</CardTitle>
+            <AddHabitDialog />
+          </CardHeader>
+          <CardContent>
             {habits.length === 0 ? (
-              <div className="text-center py-20 px-8 rounded-2xl bg-gradient-to-br from-purple-50 to-blue-50 dark:from-purple-900/20 dark:to-blue-900/20 border border-purple-200/30 dark:border-purple-700/30">
-                <div className="w-24 h-24 mx-auto mb-8 rounded-full bg-gradient-to-br from-purple-400 to-blue-500 flex items-center justify-center">
-                  <span className="text-4xl">🎯</span>
+              <div className="text-center py-20 px-8 rounded-4xl bg-muted/50 border-2 border-dashed">
+                <div className="w-24 h-24 mx-auto mb-8 rounded-full bg-primary/10 flex items-center justify-center">
+                  <Target className="h-12 w-12 text-primary" />
                 </div>
-                <h3 className="text-3xl font-bold text-slate-900 dark:text-white mb-4">Ready to start your journey?</h3>
-                <p className="text-xl text-slate-600 dark:text-slate-300 mb-10 max-w-2xl mx-auto">
-                  Create your first habit and begin building the life you want. Every expert was once a beginner.
+                <h3 className="text-3xl font-bold font-heading mb-4">Your habit list is empty!</h3>
+                <p className="text-xl text-muted-foreground mb-10 max-w-2xl mx-auto">
+                  Ready to build a better you? Add your first habit to get started.
                 </p>
                 <AddHabitDialog />
               </div>
             ) : (
-              <div>
-                <div className="flex items-center justify-between mb-8">
-                  <h2 className="text-3xl font-bold text-slate-900 dark:text-white">Your Habits</h2>
-                  <div className="text-lg text-slate-600 dark:text-slate-300">
-                    {habits.filter(h => h.completed_today).length} of {habits.length} completed
-                  </div>
-                </div>
-                <ul className="space-y-6">
-                  {habits.map((habit) => (
-                    <HabitItem key={habit.id} habit={habit} />
-                  ))}
-                </ul>
-              </div>
+              <motion.ul variants={staggerContainer} className="space-y-4">
+                {habits.map((habit) => (
+                  <motion.li variants={fadeInUp} key={habit.id}>
+                    <HabitItem habit={habit} />
+                  </motion.li>
+                ))}
+              </motion.ul>
             )}
-          </div>
-        </CardContent>
-      </Card>
-    </div>
+          </CardContent>
+        </Card>
+      </motion.div>
+    </motion.div>
   );
 }

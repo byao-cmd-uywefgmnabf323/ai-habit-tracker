@@ -1,6 +1,10 @@
 'use client';
 
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { motion } from 'framer-motion';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { BarChart3 } from 'lucide-react';
+import { staggerContainer, fadeInUp } from '@/lib/animations';
 
 interface AnalyticsData {
   name: string;
@@ -15,31 +19,74 @@ export default function AnalyticsClientPage({ data }: AnalyticsClientPageProps) 
   const hasData = data && data.some(d => d.completed > 0);
 
   return (
-    <div>
-      <h1 className="text-2xl font-bold">Analytics</h1>
-      <p className="text-gray-500 dark:text-gray-400 mb-8">Your habit completion trends for the last 7 days.</p>
+    <motion.div 
+      className="space-y-8"
+      initial="hidden"
+      animate="show"
+      variants={staggerContainer}
+    >
+      <motion.header variants={fadeInUp}>
+        <h1 className="font-heading text-5xl font-extrabold tracking-tighter">
+          Your Analytics
+        </h1>
+        <p className="mt-2 text-xl text-muted-foreground">
+          Visualize your progress and celebrate your consistency.
+        </p>
+      </motion.header>
 
-      {hasData ? (
-        <div style={{ width: '100%', height: 400 }}>
-          <ResponsiveContainer>
-            <BarChart data={data}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis allowDecimals={false} />
-              <Tooltip />
-              <Legend />
-              <Bar dataKey="completed" fill="#8884d8" name="Completed Habits" />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-      ) : (
-        <div className="text-center py-12 px-4 rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-700 mt-8">
-          <h3 className="text-lg font-medium">Not enough data yet!</h3>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-            Complete some habits on the Today screen to see your progress here.
-          </p>
-        </div>
-      )}
-    </div>
+      <motion.div variants={fadeInUp}>
+        <Card>
+          <CardHeader>
+            <CardTitle>Weekly Completions</CardTitle>
+            <CardDescription>
+              Here's a look at your completed habits over the last 7 days.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            {hasData ? (
+              <div className="h-[400px] w-full">
+                <ResponsiveContainer>
+                  <BarChart data={data}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                    <XAxis 
+                      dataKey="name" 
+                      stroke="hsl(var(--muted-foreground))"
+                      fontSize={12}
+                      tickLine={false}
+                      axisLine={false}
+                    />
+                    <YAxis 
+                      stroke="hsl(var(--muted-foreground))"
+                      fontSize={12}
+                      tickLine={false}
+                      axisLine={false}
+                      allowDecimals={false}
+                    />
+                    <Tooltip 
+                      contentStyle={{
+                        backgroundColor: 'hsl(var(--background))',
+                        border: '1px solid hsl(var(--border))',
+                        borderRadius: 'var(--radius)',
+                      }}
+                    />
+                    <Bar dataKey="completed" fill="hsl(var(--primary))" name="Completed Habits" radius={[16, 16, 0, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            ) : (
+              <div className="text-center py-20 px-8 rounded-4xl bg-muted/50 border-2 border-dashed">
+                <div className="w-24 h-24 mx-auto mb-8 rounded-full bg-primary/10 flex items-center justify-center">
+                  <BarChart3 className="h-12 w-12 text-primary" />
+                </div>
+                <h3 className="text-3xl font-bold font-heading mb-4">Not enough data yet!</h3>
+                <p className="text-xl text-muted-foreground mb-10 max-w-2xl mx-auto">
+                  Complete some habits on the Today screen to see your progress here.
+                </p>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      </motion.div>
+    </motion.div>
   );
 }

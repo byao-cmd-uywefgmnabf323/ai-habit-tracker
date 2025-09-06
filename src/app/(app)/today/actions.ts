@@ -4,7 +4,7 @@ import { revalidatePath } from 'next/cache';
 import { createClient } from '@/lib/supabase/server';
 import { getCurrentUser } from '@/lib/auth';
 
-export async function addHabit(habitName: string) {
+export async function addHabit(name: string, description?: string) {
   const supabase = await createClient();
   const user = await getCurrentUser();
 
@@ -18,7 +18,8 @@ export async function addHabit(habitName: string) {
     .from('habits')
     .insert([
       {
-        name: habitName,
+        name,
+        description,
         user_id: user.id,
         frequency_type: 'daily',
         target: 1,
