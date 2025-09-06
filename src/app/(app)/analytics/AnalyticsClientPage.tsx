@@ -39,7 +39,7 @@ export default function AnalyticsClientPage({ data }: AnalyticsClientPageProps) 
           <CardHeader>
             <CardTitle>Weekly Completions</CardTitle>
             <CardDescription>
-              Here's a look at your completed habits over the last 7 days.
+              Here&apos;s a look at your completed habits over the last 7 days.
             </CardDescription>
           </CardHeader>
           <CardContent>

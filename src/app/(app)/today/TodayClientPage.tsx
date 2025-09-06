@@ -48,7 +48,7 @@ export default function TodayClientPage({ user, habits }: TodayClientPageProps) 
       <motion.div variants={fadeInUp}>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between">
-            <CardTitle>Today's Habits</CardTitle>
+            <CardTitle>Today&apos;s Habits</CardTitle>
             <AddHabitDialog />
           </CardHeader>
           <CardContent>
