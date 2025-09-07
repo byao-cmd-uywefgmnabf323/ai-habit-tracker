@@ -9,6 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ProgressCircle } from '@/components/ui/progress-circle';
 import { Target } from 'lucide-react';
 import { staggerContainer, fadeInUp } from '@/lib/animations';
+import { PageHeader } from '../PageHeader';
 
 interface TodayClientPageProps {
   user: User | null;
@@ -27,15 +28,7 @@ export default function TodayClientPage({ user, habits }: TodayClientPageProps) 
       animate="show"
       variants={staggerContainer}
     >
-      <motion.header variants={fadeInUp} className="flex flex-col sm:flex-row items-center justify-between gap-6">
-        <div>
-          <h1 className="font-heading text-5xl font-extrabold tracking-tighter">
-            Welcome back, {user?.user_metadata.name || 'friend'}!
-          </h1>
-          <p className="mt-2 text-xl text-muted-foreground">
-            {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
-          </p>
-        </div>
+      <PageHeader title={`Welcome back, ${user?.user_metadata.name || 'friend'}!`} showAddHabit>
         <div className="flex items-center gap-4">
           <ProgressCircle progress={completionPercentage} />
           <div>
@@ -43,13 +36,12 @@ export default function TodayClientPage({ user, habits }: TodayClientPageProps) 
             <p className="text-muted-foreground">habits completed</p>
           </div>
         </div>
-      </motion.header>
+      </PageHeader>
 
       <motion.div variants={fadeInUp}>
         <Card>
-          <CardHeader className="flex flex-row items-center justify-between">
+          <CardHeader>
             <CardTitle>Today&apos;s Habits</CardTitle>
-            <AddHabitDialog />
           </CardHeader>
           <CardContent>
             {habits.length === 0 ? (

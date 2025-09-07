@@ -5,6 +5,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { BarChart3 } from 'lucide-react';
 import { staggerContainer, fadeInUp } from '@/lib/animations';
+import { PageHeader } from '../PageHeader';
 
 interface AnalyticsData {
   name: string;
@@ -25,14 +26,9 @@ export default function AnalyticsClientPage({ data }: AnalyticsClientPageProps) 
       animate="show"
       variants={staggerContainer}
     >
-      <motion.header variants={fadeInUp}>
-        <h1 className="font-heading text-5xl font-extrabold tracking-tighter">
-          Your Analytics
-        </h1>
-        <p className="mt-2 text-xl text-muted-foreground">
-          Visualize your progress and celebrate your consistency.
-        </p>
-      </motion.header>
+      <motion.div variants={fadeInUp}>
+        <PageHeader title="Analytics" />
+      </motion.div>
 
       <motion.div variants={fadeInUp}>
         <Card>

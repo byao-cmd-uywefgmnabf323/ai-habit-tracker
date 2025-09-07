@@ -5,6 +5,7 @@ import SignOutButton from './SignOutButton';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import { staggerContainer, fadeInUp } from '@/lib/animations';
 import { User } from '@supabase/supabase-js';
+import { PageHeader } from '../PageHeader';
 
 interface SettingsClientPageProps {
   user: User | null;
@@ -18,14 +19,9 @@ export default function SettingsClientPage({ user }: SettingsClientPageProps) {
       animate="show"
       variants={staggerContainer}
     >
-      <motion.header variants={fadeInUp}>
-        <h1 className="font-heading text-5xl font-extrabold tracking-tighter">
-          Settings
-        </h1>
-        <p className="mt-2 text-xl text-muted-foreground">
-          Manage your account and preferences.
-        </p>
-      </motion.header>
+      <motion.div variants={fadeInUp}>
+        <PageHeader title="Settings" />
+      </motion.div>
 
       <motion.div variants={fadeInUp}>
         <Card>

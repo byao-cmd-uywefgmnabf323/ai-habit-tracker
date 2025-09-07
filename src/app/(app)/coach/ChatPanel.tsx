@@ -19,10 +19,7 @@ export default function ChatPanel() {
   });
 
   return (
-    <div className="flex flex-col h-[calc(100vh-10rem)] bg-card rounded-4xl border shadow-lg">
-      <div className="p-6 border-b">
-        <h1 className="font-heading text-3xl font-bold">AI Coach</h1>
-      </div>
+    <div className="flex flex-col h-[calc(100vh-16rem)] bg-card rounded-4xl border shadow-lg">
       <ScrollArea className="flex-1 p-6">
         {messages.length === 0 ? (
           <div className="flex items-center justify-center h-full">

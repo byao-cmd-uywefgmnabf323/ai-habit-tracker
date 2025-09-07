@@ -3,10 +3,10 @@
 import { motion } from 'framer-motion';
 import { Habit } from '@/types/habit';
 import HabitItem from '@/app/(app)/today/HabitItem';
-import AddHabitDialog from '../today/AddHabitDialog';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { List } from 'lucide-react';
 import { staggerContainer, fadeInUp } from '@/lib/animations';
+import { PageHeader } from '../PageHeader';
 
 interface HabitsClientPageProps {
   habits: Habit[];
@@ -20,20 +20,12 @@ export default function HabitsClientPage({ habits }: HabitsClientPageProps) {
       animate="show"
       variants={staggerContainer}
     >
-      <motion.header variants={fadeInUp}>
-        <h1 className="font-heading text-5xl font-extrabold tracking-tighter">
-          All Habits
-        </h1>
-        <p className="mt-2 text-xl text-muted-foreground">
-          Manage your habits and track your long-term progress.
-        </p>
-      </motion.header>
+      <PageHeader title="All Habits" showAddHabit />
 
       <motion.div variants={fadeInUp}>
         <Card>
-          <CardHeader className="flex flex-row items-center justify-between">
+          <CardHeader>
             <CardTitle>Your Habit Library</CardTitle>
-            <AddHabitDialog />
           </CardHeader>
           <CardContent>
             {habits.length === 0 ? (
@@ -45,7 +37,6 @@ export default function HabitsClientPage({ habits }: HabitsClientPageProps) {
                 <p className="text-xl text-muted-foreground mb-10 max-w-2xl mx-auto">
                   Your library is empty. Add a new habit to start your journey.
                 </p>
-                <AddHabitDialog />
               </div>
             ) : (
               <motion.ul variants={staggerContainer} className="space-y-4">
