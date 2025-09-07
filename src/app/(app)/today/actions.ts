@@ -14,24 +14,33 @@ export async function addHabit(name: string, description?: string) {
     };
   }
 
-  const { data, error } = await supabase
-    .from('habits')
-    .insert([
-      {
-        name,
-        description,
-        user_id: user.id,
-        frequency_type: 'daily',
-        target: 1,
-      },
-    ])
-    .select();
+  // Try to insert using a flexible shape to support either `name` or `title` schemas
+  let insertError: any | null = null;
+  let data: any = null;
+  // Attempt 1: name + description
+  {
+    const { data: d, error: e } = await supabase
+      .from('habits')
+      .insert([{ name, description, user_id: user.id }])
+      .select();
+    data = d;
+    insertError = e;
+  }
 
-  if (error) {
-    console.error('Error adding habit:', error);
-    return {
-      error: 'Could not add habit. Please try again.',
-    };
+  // Attempt 2: fallback to title if name failed due to column mismatch
+  if (insertError) {
+    const { data: d2, error: e2 } = await supabase
+      .from('habits')
+      // @ts-ignore - depending on schema, title may exist instead of name
+      .insert([{ title: name, description, user_id: user.id }])
+      .select();
+    data = d2;
+    insertError = e2;
+  }
+
+  if (insertError) {
+    console.error('Error adding habit:', insertError);
+    return { error: insertError.message || 'Could not add habit. Please try again.' };
   }
 
   revalidatePath('/today');
@@ -54,42 +63,44 @@ export async function toggleHabitCompletion(habitId: string) {
 
   const today = new Date().toISOString().split('T')[0];
 
-  // Check if habit is already completed today
-  const { data: existingCompletion } = await supabase
-    .from('habit_completions')
+  // Check if habit is already marked done today via habit_entries
+  const { data: existingEntry } = await supabase
+    .from('habit_entries')
     .select('id')
     .eq('habit_id', habitId)
     .eq('user_id', user.id)
-    .eq('completed_at', today)
+    .eq('date', today)
+    .eq('status', 'done')
     .single();
 
-  if (existingCompletion) {
-    // Remove completion
+  if (existingEntry) {
+    // Remove the "done" entry to un-complete
     const { error } = await supabase
-      .from('habit_completions')
+      .from('habit_entries')
       .delete()
-      .eq('id', existingCompletion.id);
+      .eq('id', existingEntry.id);
 
     if (error) {
-      console.error('Error removing habit completion:', error);
+      console.error('Error removing habit entry:', error);
       return {
         error: 'Could not update habit. Please try again.',
       };
     }
   } else {
-    // Add completion
+    // Add a "done" entry for today
     const { error } = await supabase
-      .from('habit_completions')
+      .from('habit_entries')
       .insert([
         {
           habit_id: habitId,
           user_id: user.id,
-          completed_at: today,
+          date: today,
+          status: 'done',
         },
       ]);
 
     if (error) {
-      console.error('Error adding habit completion:', error);
+      console.error('Error adding habit entry:', error);
       return {
         error: 'Could not complete habit. Please try again.',
       };
@@ -97,7 +108,7 @@ export async function toggleHabitCompletion(habitId: string) {
   }
 
   revalidatePath('/today');
-  revalidatePath('/habits');
+  revalidatePath('/tasks');
   revalidatePath('/analytics');
 
   return {

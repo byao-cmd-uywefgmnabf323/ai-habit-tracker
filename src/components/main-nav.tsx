@@ -9,7 +9,8 @@ import { Bot } from "lucide-react"
 
 const mainNav = [
   { href: "/today", title: "Today" },
-  { href: "/habits", title: "Habits" },
+  { href: "/tasks", title: "My Tasks" },
+  { href: "/tasks/all", title: "All Tasks" },
   { href: "/analytics", title: "Analytics" },
   { href: "/coach", title: "AI Coach" },
   { href: "/settings", title: "Settings" },

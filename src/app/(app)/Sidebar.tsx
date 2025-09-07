@@ -9,7 +9,8 @@ import { LayoutDashboard, ListTodo, BarChart3, Bot, Settings, Target } from 'luc
 
 const navItems = [
   { href: '/today', label: 'Today', icon: LayoutDashboard },
-  { href: '/habits', label: 'Habits', icon: ListTodo },
+  { href: '/tasks', label: 'My Tasks', icon: ListTodo },
+  { href: '/tasks/all', label: 'All Tasks', icon: ListTodo },
   { href: '/analytics', label: 'Analytics', icon: BarChart3 },
   { href: '/coach', label: 'Coach', icon: Bot },
 ];

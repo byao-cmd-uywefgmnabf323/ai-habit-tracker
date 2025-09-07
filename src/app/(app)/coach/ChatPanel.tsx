@@ -8,12 +8,21 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { SendHorizontal, Bot } from 'lucide-react';
 
 export default function ChatPanel() {
-  const { messages, input, handleInputChange, handleSubmit, isLoading } = useChat({
+  const {
+    messages,
+    input,
+    handleInputChange,
+    handleSubmit,
+    isLoading,
+    error,
+  } = useChat({
+    api: '/api/chat',
     initialMessages: [
       {
         id: '1',
         role: 'assistant',
-        content: 'Hello! I am your AI Habit Coach. How can I help you achieve your goals today?',
+        content:
+          'Hello! I am your AI Habit Coach. How can I help you achieve your goals today?',
       },
     ],
   });
@@ -71,6 +80,11 @@ export default function ChatPanel() {
           </div>
         )}
       </ScrollArea>
+      {error ? (
+        <div className="px-6 py-3 text-sm text-red-400">
+          There was a problem talking to the AI service. Make sure your OPENAI_API_KEY is set on the server and try again.
+        </div>
+      ) : null}
       <div className="p-4 border-t bg-card rounded-b-4xl">
         <form onSubmit={handleSubmit} className="flex items-center space-x-4">
           <Input
