@@ -32,10 +32,11 @@ export default async function TodayPage() {
     console.error('Error fetching habit entries:', entriesError);
   }
 
-  const doneSet = new Set((entries || []).map((e: any) => e.habit_id));
+  const doneSet = new Set((entries ?? []).map((e: { habit_id: string }) => e.habit_id));
 
   // Transform the data to include completed_today flag and normalize name
-  const habitsWithCompletion = (habits || []).map((habit: any) => ({
+  type HabitRow = Habit & { title?: string; name?: string };
+  const habitsWithCompletion: Habit[] = ((habits ?? []) as HabitRow[]).map((habit) => ({
     ...habit,
     name: habit.name ?? habit.title ?? 'Untitled',
     completed_today: doneSet.has(habit.id),

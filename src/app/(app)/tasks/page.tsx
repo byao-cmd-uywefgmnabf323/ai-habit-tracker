@@ -1,6 +1,7 @@
 import { getCurrentUser } from '@/lib/auth';
 import { createClient } from '@/lib/supabase/server';
 import TasksClientPage from './tasksClientPage';
+import type { Task } from './actions';
 
 export default async function TasksPage() {
   const user = await getCurrentUser();
@@ -25,6 +26,6 @@ export default async function TasksPage() {
     .single();
 
   return (
-    <TasksClientPage date={today} tasks={(tasks ?? []) as any} reflection={note?.content ?? ''} />
+    <TasksClientPage date={today} tasks={(tasks ?? []) as Task[]} reflection={(note?.content as string) ?? ''} />
   );
 }

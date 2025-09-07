@@ -1,6 +1,7 @@
 import { getCurrentUser } from '@/lib/auth';
 import { createClient } from '@/lib/supabase/server';
 import AllTasksClientPage from './tasksAllClientPage';
+import type { Task } from '../actions';
 
 export default async function AllTasksPage() {
   const user = await getCurrentUser();
@@ -15,6 +16,11 @@ export default async function AllTasksPage() {
     .order('date', { ascending: false })
     .order('created_at', { ascending: true });
 
-  const groups = Object.groupBy((data ?? []) as any[], (t) => t.date) as Record<string, any[]>;
+  const list = (data ?? []) as Task[];
+  const groups = list.reduce((acc: Record<string, Task[]>, t) => {
+    (acc[t.date] ||= []).push(t);
+    return acc;
+  }, {} as Record<string, Task[]>);
+
   return <AllTasksClientPage groups={groups} />;
 }

@@ -14,33 +14,28 @@ export async function addHabit(name: string, description?: string) {
     };
   }
 
-  // Try to insert using a flexible shape to support either `name` or `title` schemas
-  let insertError: any | null = null;
-  let data: any = null;
-  // Attempt 1: name + description
-  {
-    const { data: d, error: e } = await supabase
-      .from('habits')
-      .insert([{ name, description, user_id: user.id }])
-      .select();
-    data = d;
-    insertError = e;
-  }
+  // Attempt 1: insert using `name`
+  const attempt1 = await supabase
+    .from('habits')
+    .insert([{ name, description, user_id: user.id }])
+    .select();
 
-  // Attempt 2: fallback to title if name failed due to column mismatch
-  if (insertError) {
-    const { data: d2, error: e2 } = await supabase
+  let data = attempt1.data;
+  let error = attempt1.error;
+
+  // Attempt 2: if the first failed (e.g., column mismatch), insert using `title`
+  if (error) {
+    const attempt2 = await supabase
       .from('habits')
-      // @ts-ignore - depending on schema, title may exist instead of name
       .insert([{ title: name, description, user_id: user.id }])
       .select();
-    data = d2;
-    insertError = e2;
+    data = attempt2.data;
+    error = attempt2.error;
   }
 
-  if (insertError) {
-    console.error('Error adding habit:', insertError);
-    return { error: insertError.message || 'Could not add habit. Please try again.' };
+  if (error) {
+    console.error('Error adding habit:', error);
+    return { error: error.message || 'Could not add habit. Please try again.' };
   }
 
   revalidatePath('/today');
